@@ -1,12 +1,18 @@
 # Technical-Intro-to-Blockchain
 
-##About
+## About
 
 **Prerequisites**
 
 **Learning Outcomes**
 
-##Modules
+## Modules
 
-##Assignments
+**Module 1**
+
+**Module 2**
+
+**Module 3**
+
+## Assignments
 
