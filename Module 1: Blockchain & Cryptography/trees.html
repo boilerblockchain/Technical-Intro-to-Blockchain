@@ -7,9 +7,46 @@
   </head>
   <body>
     <div id="controlBox">
-      <label for="dataInput">Data</label>
-      <input id="dataInput" type="text" />
-      <button id="addButton">Add</button>
+      <form id="dataForm">
+        <label for="dataInput">Data</label>
+        <input id="dataInput" type="text" autofocus />
+
+        <div>
+          <label for="nodeWidthInput">Node Width:</label>
+          <span id="nodeWidthText"></span>
+          <input
+            type="range"
+            min="1"
+            max="500"
+            id="nodeWidthInput"
+            style="display: block"
+          />
+        </div>
+        <div>
+          <label for="nodeHeightInput">Node Height:</label>
+          <span id="nodeHeightText"></span>
+          <input
+            type="range"
+            min="1"
+            max="500"
+            id="nodeHeightInput"
+            style="display: block"
+          />
+        </div>
+        <div>
+          <label for="spacingInput">Spacing:</label>
+          <span id="spacingText"></span>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            id="spacingInput"
+            style="display: block"
+          />
+        </div>
+
+        <button type="submit">Add</button>
+      </form>
     </div>
     <div id="treeBox"></div>
     <div id="storageBox"></div>
