@@ -28,7 +28,7 @@ const dataStorage = new Map();
 
 let rootHash;
 
-const buildTree = () => {
+const insertTreeNodes = () => {
   const leafNodeHashes = Array.from(dataStorage.keys()).sort();
 
   let remainingNodes = leafNodeHashes.map((hash) => ({ value: hash }));
@@ -52,12 +52,15 @@ const buildTree = () => {
     }
   }
 
-  rootHash = parentNodes[0].value;
-  console.debug(Array.from(treeStorage.entries()).map(([k, v]) => ({ k, v })));
+  rootHash = parentNodes.length ? parentNodes[0].value : null;
+  // console.debug(Array.from(treeStorage.entries()).map(([k, v]) => ({ k, v })));
 };
 
 const drawTree = (container) => {
   container.textContent = "";
+
+  if (rootHash == null) return;
+
   const queue = [rootHash, null];
 
   let depth = 0;
@@ -121,17 +124,100 @@ const drawNode = (container, text, treeHeight, depth, siblingIndex) => {
   container.appendChild(node);
 };
 
+const buildTree = () => {
+  treeStorage.clear();
+  insertTreeNodes();
+  drawTree(treeBox);
+};
+
+const handleUnfocusKeypress = (element) => (event) => {
+  console.debug(event.key);
+  if (event.key === "Enter") {
+    element.blur();
+  }
+};
+
+const updateData = (oldValue) => {
+  const d1 = document.getElementById(oldValue);
+  // nothing changed
+  if (d1.textContent === oldValue) {
+    return;
+  }
+  // console.debug("updateDate", oldValue);
+  const oldHash = testHash(oldValue);
+
+  const d2 = document.getElementById(oldHash);
+
+  const newHash = testHash(d1.textContent);
+  if (dataStorage.has(newHash)) {
+    alert("Can't change to value that already exists");
+    d1.textContent = oldValue;
+    return;
+  }
+
+  dataStorage.delete(oldHash);
+  dataStorage.set(newHash, d1.textContent);
+
+  d2.textContent = newHash;
+  d2.id = newHash;
+
+  const clone = d1.cloneNode(true);
+  clone.id = clone.textContent;
+  console.debug("textContet", clone.textContent);
+
+  // TODO some weird reference kept if using clone.textContent, replaced with clone.id for now
+  clone.addEventListener("blur", () => updateData(clone.id));
+  d1.parentElement.replaceChild(clone, d1);
+  clone.addEventListener("keypress", handleUnfocusKeypress(clone));
+
+  buildTree();
+};
+
 const insertLeaf = (value) => {
   const key = testHash(value);
+  if (dataStorage.has(key)) {
+    alert("Value already exists");
+    return;
+  }
   dataStorage.set(key, value);
 
-  treeStorage.clear();
-  buildTree();
+  const row = document.createElement("tr");
+  const d1 = document.createElement("td");
+  const d2 = document.createElement("td");
+  const d3 = document.createElement("td");
+  const deleteButton = document.createElement("button");
 
-  drawTree(treeBox);
+  d1.setAttribute("contentEditable", "true");
+  d1.addEventListener("blur", () => updateData(value));
+  d1.addEventListener("keypress", handleUnfocusKeypress(d1));
+  d1.id = value;
+  d1.textContent = value;
+
+  d2.id = key;
+  d2.textContent = key;
+
+  deleteButton.classList.add("deleteButton");
+  deleteButton.textContent = "X";
+  deleteButton.addEventListener("click", () => {
+    dataStorage.delete(
+      deleteButton.parentElement.previousElementSibling.textContent
+    );
+    console.debug(
+      deleteButton.parentElement.previousElementSibling.textContent
+    );
+    row.remove();
+    buildTree();
+  });
+
+  d3.appendChild(deleteButton);
+
+  row.append(d1, d2, d3);
+  el.storageTableBody.appendChild(row);
+
   //storage.set(key, { data: value });
 
   // const rootKey = storage.keys[0];
+  buildTree();
 };
 
 const updateLeaf = (key) => {
@@ -152,6 +238,7 @@ const el = Object.fromEntries(
     "nodeHeightText",
     "spacingInput",
     "spacingText",
+    "storageTableBody",
   ].map((id) => {
     const element = document.getElementById(id);
     return [id, element];

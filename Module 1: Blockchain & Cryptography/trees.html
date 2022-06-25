@@ -4,13 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tree Demo</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .boxWrapper > * {
+        outline: 2px solid black;
+        padding: 16px;
+        flex: 1;
+      }
+
+      table,
+      th,
+      tr,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 8px 16px;
+      }
+
+      tr {
+        background-color: #fafafa;
+      }
+      tr:nth-child(even) {
+        background-color: #e0e0e0;
+      }
+
+      .deleteButton {
+        padding: 8px 16px;
+        border-radius: 8px;
+        background-color: rgb(255, 180, 180);
+      }
+    </style>
+    <script src="trees.js" defer></script>
   </head>
   <body>
-    <div id="controlBox">
-      <form id="dataForm">
-        <label for="dataInput">Data</label>
-        <input id="dataInput" type="text" autofocus />
-
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin: 16px;
+      "
+      class="boxWrapper"
+    >
+      <div id="storageBox">
+        <form id="dataForm">
+          <label for="dataInput">Data</label>
+          <input id="dataInput" type="text" autofocus />
+          <button type="submit">Add</button>
+        </form>
+        <table style="width: 100%">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Hash</th>
+              <th style="width: 1px"></th>
+            </tr>
+          </thead>
+          <tbody id="storageTableBody"></tbody>
+        </table>
+      </div>
+      <div id="controlBox">
         <div>
           <label for="nodeWidthInput">Node Width:</label>
           <span id="nodeWidthText"></span>
@@ -44,12 +105,8 @@
             style="display: block"
           />
         </div>
-
-        <button type="submit">Add</button>
-      </form>
+      </div>
+      <div id="treeBox"></div>
     </div>
-    <div id="treeBox"></div>
-    <div id="storageBox"></div>
-    <script src="trees.js"></script>
   </body>
 </html>
