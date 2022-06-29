@@ -285,3 +285,121 @@ el.dataForm.addEventListener("submit", (e) => {
 });
 
 // addButton.addEventListener("click", () => insertLeaf(dataInput.value));
+
+class MerkleTree {
+  constructor(leaves) {
+    this.leaves = leaves;
+  }
+
+  /**
+   * Calculates a Merkle Tree root from leaves
+   *
+   * This is an iterative approach. Try creating a recursive solution as an exercise?
+   */
+  getRoot(k = 2) {
+    const queue = [null, ...this.leaves];
+
+    while (true) {
+      // This adds a `null` after every "layer" of the tree
+      // Since we know we hit a new layer if the top of the queue is a `null`
+      if (queue[0] == null) {
+        queue.shift();
+
+        // This ends the entire loop once there are not enough nodes for another layer
+        if (queue.length < k) {
+          break;
+        }
+        queue.push(null);
+      }
+
+      // Grab up to k siblings, without including nodes from the next layer
+      let j;
+      for (j = 0; j < k; j++) {
+        if (queue[j] == null) break;
+      }
+      const siblings = queue.splice(0, j);
+
+      // If we don't have k nodes, simply move leftover nodes to the next layer
+      if (siblings.length < k) {
+        queue.push(...siblings);
+        continue;
+      }
+
+      // A way to combine k nodes e.g hash functions. This is for show.
+      const combo = `(${siblings.join("+")})`;
+      queue.push(combo);
+    }
+
+    // Returns the root or the leftover nodes if we can't make a k-nary tree
+    return queue.length === 1 ? queue[0] : queue;
+  }
+
+  getProof(hash) {
+    return this.getProofByIndex(this.leaves.indexOf(hash))
+  }
+
+  getProofByIndex(index) {
+    const proof = [];
+    const queue = [null, ...this.leaves];
+
+    while (true) {
+      if (queue[0] == null) {
+        queue.shift();
+
+        if (queue.length < k) {
+          break;
+        }
+
+        ///////////////////////////////
+        // Generate proof part
+        ///////////////////////////////
+        const left = index % 2;
+        const pair = left ? index - 1 : index + 1;
+        if (pair < queue.length) {
+          proof.push({ data: queue[pair], left });
+        }
+        index = Math.floor(index / 2);
+        ///////////////////////////////
+
+        queue.push(null);
+      }
+
+      let j;
+      for (j = 0; j < k; j++) {
+        if (queue[j] == null) break;
+      }
+      const siblings = queue.splice(0, j);
+
+      if (siblings.length < k) {
+        queue.push(...siblings);
+        continue;
+      }
+
+      const combo = `(${siblings.join("+")})`;
+      queue.push(combo);
+    }
+
+    return proof;
+  }
+}
+
+
+
+
+
+const verifyProof = (proof, node, root, concat) => {
+  let hash = node
+  for (node of proof) {
+    if (node.left) {
+        hash = concat(node.data, hash)
+    }
+    else {
+        hash = concat(hash, node.data)
+    }
+  }
+  return hash === root;
+}
+
+/* console.log(getRoot([])) */
+/* console.log(getRoot(['A'])) */
+// console.log(getRoot(["A", "B", "C", "D", "E"]));
