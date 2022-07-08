@@ -6,13 +6,17 @@ const testHash = (...input) => {
   return `{${input.join(",")}}`;
 };
 
+/** Children per node. 2 for binary tree */
 const NUM_CHILDREN = 2;
 
-/**
- * Maps as key-value storage
- * Maps a Hash to TreeNode | LeafNode | data/string
+/** Stores all the nodes in the Merkle tree.
+ * The nodes are the values, and the associated hashes are the keys
  */
 const treeStorage = new Map();
+
+/** Stores the actual data, which are the leaf nodes in the tree.
+ * The data is the value, and the hash of the data is the key
+ */
 const dataStorage = new Map();
 
 // interface LeafNode {
@@ -286,6 +290,13 @@ el.dataForm.addEventListener("submit", (e) => {
 
 // addButton.addEventListener("click", () => insertLeaf(dataInput.value));
 
+/**
+ *
+ * Showable code / exercises based on chainshot exercises
+ *
+ *
+ */
+
 class MerkleTree {
   constructor(leaves) {
     this.leaves = leaves;
@@ -335,7 +346,7 @@ class MerkleTree {
   }
 
   getProof(hash) {
-    return this.getProofByIndex(this.leaves.indexOf(hash))
+    return this.getProofByIndex(this.leaves.indexOf(hash));
   }
 
   getProofByIndex(index) {
@@ -383,22 +394,17 @@ class MerkleTree {
   }
 }
 
-
-
-
-
 const verifyProof = (proof, node, root, concat) => {
-  let hash = node
+  let hash = node;
   for (node of proof) {
     if (node.left) {
-        hash = concat(node.data, hash)
-    }
-    else {
-        hash = concat(hash, node.data)
+      hash = concat(node.data, hash);
+    } else {
+      hash = concat(hash, node.data);
     }
   }
   return hash === root;
-}
+};
 
 /* console.log(getRoot([])) */
 /* console.log(getRoot(['A'])) */
