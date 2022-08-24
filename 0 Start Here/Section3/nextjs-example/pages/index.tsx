@@ -29,16 +29,6 @@ const Home: NextPage = () => {
         <h2>{loading ? "Loading..." : blockNum}</h2>
         <button onClick={onClick}>Get Current Block Number</button>
       </main>
-
-      <footer>
-        <a
-          href="https://github.com/boilerblockchain/Technical-Intro-to-Blockchain/tree/main/0%20Start%20Here"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Github
-        </a>
-      </footer>
     </div>
   );
 };
