@@ -1,26 +1,29 @@
-const express = require('express')
-const cors = require('cors')
-const { ethers } = require("ethers")
-const app = express()
+const express = require("express");
+const cors = require("cors");
+const { ethers } = require("ethers");
+const app = express();
 
 /**
  * This allows cross-origin requests, makes demo easier
  * In real app, this should only be allowed for public endpoints
-*/
-app.use(cors())
+ */
+app.use(cors());
 
-const port = 3000
+const port = 3000;
+
+// This makes all files in the public folder available
+app.use(express.static("public"));
 
 /**
  * Test this out with the following command
  * curl http://localhost:3000/api/blockNum
  */
-app.get('/api/blockNum', async (req, res) => {
+app.get("/api/blockNum", async (req, res) => {
   const provider = ethers.getDefaultProvider("mainnet");
   const blockNum = await provider.getBlockNumber();
-  res.send({ blockNum })
-})
+  res.send({ blockNum });
+});
 
 app.listen(port, () => {
-  console.log(`Simple app listening on port ${port}`)
-})
+  console.log(`Simple app listening on port ${port}`);
+});

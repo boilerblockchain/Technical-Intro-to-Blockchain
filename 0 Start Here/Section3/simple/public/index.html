@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Plain HTML</title>
+    <!-- Use an external style sheet if you want -->
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+  </head>
+  <body>
+    <main style="text-align: center; height: 100%">
+      <h1>Ethereum Block Number</h1>
+      <h2 id="blockNumDisplay"></h2>
+      <button onClick="onClick()">Get Current Block Number</button>
+    </main>
+
+    <!-- Put js in a separate file if you want -->
+    <!-- <script src="index.js"></script> -->
+    <script>
+      const blockNumDisplay = document.getElementById("blockNumDisplay");
+      const onClick = async () => {
+        blockNumDisplay.textContent = "Loading...";
+        const test = await fetch("/api/blockNum");
+        const data = await test.json();
+        blockNumDisplay.textContent = data.blockNum;
+      };
+    </script>
+  </body>
+</html>
