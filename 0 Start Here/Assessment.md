@@ -23,8 +23,6 @@ Js to Ts: simply change the file extension from .js to .ts
 
 Data structures and algorithms are some of the core tools we leverage to develop and build meaningful applications. Although they will not always be explicitly used in web development due to their abstraction in most libraries/APIs, data structures provide critical functionality "under the hood". It is important to be familiar with the fundamentals of data structures and algorithms in order to understand how they are specifically applied in blockchain and web development.
 
-Do your best to answer the following problems about data structures and algorithms concepts. There will be three components: providing psuedocode (or your favorite language) solutions to array and string problems, multiple choice, and advanced concepts. Do NOT answer all questions. Only complete the question numbers you are directed to.
-
 ## Section 3 - Networking and Architecture
 
 A web page can't do much on its own. It has HTML, CSS, and JS for content, styling, and logic, but it lacks outside information and state that persists. That's where APIs come in.
