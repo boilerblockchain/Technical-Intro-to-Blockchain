@@ -64,6 +64,7 @@ const buildTree = (
   hashFunc: (...input: string[]) => string,
   k: number = 2
 ) => {
+  leaves.sort();
   const leafNodes = leaves.map((leaf) => [
     leaf,
     { name: hashFunc(leaf), attributes: { value: leaf } },
@@ -102,7 +103,7 @@ const buildTree = (
 
   if (queue.length !== 1) return { map: null, root: null };
 
-  return { map: treeMap, root: (queue[0] as unknown) as string };
+  return { map: treeMap, root: queue[0] as unknown as string };
 };
 
 const DEFAULT_TREE = {
@@ -122,7 +123,8 @@ const Merkle: NextPage = () => {
   const onFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const key = hash(value);
-    setKeyValues(new Map(keyValues.set(key, value)));
+    keyValues.set(key, value);
+    setKeyValues(new Map(Array.from(keyValues).sort()));
     setValue("");
   };
 
@@ -130,16 +132,18 @@ const Merkle: NextPage = () => {
     setValue(e.target.value);
   };
 
-  const handleChangeValue = (oldHash: string) => (
-    e: React.FocusEvent<HTMLInputElement>
-  ) => {
-    const key = hash(e.target.value);
-    if (key === oldHash) return;
+  const handleChangeValue =
+    (oldHash: string) => (e: React.FocusEvent<HTMLInputElement>) => {
+      const key = hash(e.target.value);
+      if (key === oldHash) return;
 
-    keyValues.delete(oldHash);
-    keyValues.set(key, e.target.value);
-    setKeyValues(new Map(keyValues));
-  };
+      keyValues.delete(oldHash);
+
+      if (key !== "") {
+        keyValues.set(key, e.target.value);
+      }
+      setKeyValues(new Map(Array.from(keyValues).sort()));
+    };
 
   useEffect(() => {
     const leaves = Array.from(keyValues.values());
@@ -208,8 +212,7 @@ const Merkle: NextPage = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {Array.from(keyValues.values()).map((value) => {
-                    const key = hash(value);
+                  {Array.from(keyValues.entries()).map(([key, value]) => {
                     return (
                       <TableRow
                         key={key}
