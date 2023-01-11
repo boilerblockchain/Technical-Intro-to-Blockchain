@@ -19,7 +19,7 @@ OOP fundamentals, basic data structures and understanding of algorithms and vers
 #### Blockhcains & Cryptography
 Technical introduction to blockchains and consensus, their components and mechanisms
 
-#### DApps and Smart Contracts
+#### DApps & Smart Contracts
 Dive into the workings of blockchain-based virtual machines, and related programming languages
 
 #### Blockchain Development
