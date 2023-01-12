@@ -1,3 +1,3 @@
-### Module 3: Blockchain DEvelopment
+### Module 3: Blockchain Development
 
 ...
