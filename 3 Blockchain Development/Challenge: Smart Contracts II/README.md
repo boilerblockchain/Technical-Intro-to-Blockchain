@@ -1,5 +1,5 @@
 ## Challenge: Smart Contracts II
----
+
 ## Part 1: Delegatecall Vulnerability
 
 This Todo contract has an example of a delegatecall() vulnerability. 
@@ -45,6 +45,7 @@ function addTask(string memory _task) public {
 ### TODO: 
 Write a "MultipleCall" contract that allows a function to make multiple delegatecalls to a given set of addresses.
 Bonus: require addresses to sign a transaction to be verified.
+
 ---
 
 ## Part 2: Uniswap V3 Arbitrage using Flash Swaps
