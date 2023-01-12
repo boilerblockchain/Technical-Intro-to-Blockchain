@@ -1,4 +1,4 @@
-## Challenge: Smart Contracts II
+# Challenge: Smart Contracts II
 
 ## Part 1: Delegatecall Vulnerability
 
