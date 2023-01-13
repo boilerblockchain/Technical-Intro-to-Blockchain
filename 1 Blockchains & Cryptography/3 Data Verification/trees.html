@@ -9,12 +9,6 @@
         margin: 0;
       }
 
-      .boxWrapper > * {
-        outline: 2px solid black;
-        padding: 16px;
-        flex: 1;
-      }
-
       table,
       th,
       tr,
@@ -52,9 +46,8 @@
         gap: 16px;
         margin: 16px;
       "
-      class="boxWrapper"
     >
-      <div id="storageBox">
+      <div style="display: flex; gap: 16px; flex-direction: column">
         <form id="dataForm">
           <label for="dataInput">Data</label>
           <input id="dataInput" type="text" autofocus />
@@ -70,42 +63,43 @@
           </thead>
           <tbody id="storageTableBody"></tbody>
         </table>
+        <div id="controlBox">
+          <div>
+            <label for="nodeWidthInput">Node Width:</label>
+            <span id="nodeWidthText"></span>
+            <input
+              type="range"
+              min="1"
+              max="500"
+              id="nodeWidthInput"
+              style="display: block"
+            />
+          </div>
+          <div>
+            <label for="nodeHeightInput">Node Height:</label>
+            <span id="nodeHeightText"></span>
+            <input
+              type="range"
+              min="1"
+              max="500"
+              id="nodeHeightInput"
+              style="display: block"
+            />
+          </div>
+          <div>
+            <label for="spacingInput">Spacing:</label>
+            <span id="spacingText"></span>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              id="spacingInput"
+              style="display: block"
+            />
+          </div>
+        </div>
       </div>
-      <div id="controlBox">
-        <div>
-          <label for="nodeWidthInput">Node Width:</label>
-          <span id="nodeWidthText"></span>
-          <input
-            type="range"
-            min="1"
-            max="500"
-            id="nodeWidthInput"
-            style="display: block"
-          />
-        </div>
-        <div>
-          <label for="nodeHeightInput">Node Height:</label>
-          <span id="nodeHeightText"></span>
-          <input
-            type="range"
-            min="1"
-            max="500"
-            id="nodeHeightInput"
-            style="display: block"
-          />
-        </div>
-        <div>
-          <label for="spacingInput">Spacing:</label>
-          <span id="spacingText"></span>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            id="spacingInput"
-            style="display: block"
-          />
-        </div>
-      </div>
+
       <div id="treeBox"></div>
     </div>
   </body>

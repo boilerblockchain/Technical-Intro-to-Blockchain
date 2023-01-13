@@ -3,7 +3,7 @@
  *
  */
 const testHash = (...input) => {
-  return `{${input.join(",")}}`;
+  return `(${input.join(",")})`;
 };
 
 /** Children per node. 2 for binary tree */
@@ -123,7 +123,7 @@ const drawNode = (container, text, treeHeight, depth, siblingIndex) => {
   node.style.width = `${nodeWidth}px`;
   node.style.height = `${nodeHeight}px`;
 
-  node.style.backgroundColor = "red";
+  node.style.border = "1px solid black";
 
   container.appendChild(node);
 };
